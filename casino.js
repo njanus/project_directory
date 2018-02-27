@@ -1,4 +1,4 @@
-//remember to wrap in module 
+var cards = (function() {
 
 var CARD_VALUES = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"]
 var CARD_SUITS = ["hearts", "diamonds", "spades", "clubs"]
@@ -68,22 +68,25 @@ function Shoe(deck_count) {
   
 }
 
-function Hand(card_amount, shoe_deck_count) {
-  var shoe = new Shoe(shoe_deck_count)
+function Hand(card_amount, deck) { 
+  this.deck = deck
   this.card_amount = card_amount;
   this.card_array = [];
   this.disgard_pile = [];
   this.getHand = function () {
     for(var i=0; i<this.card_amount; i++){
-      shoe.shuffle();
-      this.card_array.push(shoe.card_array[i]);
+      this.deck.shuffle();
+      this.card_array.push(deck.card_array[i]);    
+      deck.card_array.splice(i, 1);
     }
   };
   this.getHand();
   
   this.addCard = function () {
     this.card_amount++;
-    this.card_array.push(shoe.card_array[card_amount++]);
+    for(var i=0; i<1; i++);
+    this.card_array.push(deck.card_array[card_amount++]);
+    deck.card_array.splice(i, 1);
   };
   
   this.clearHand = function () {
@@ -100,28 +103,46 @@ function Hand(card_amount, shoe_deck_count) {
   };
 }
 
-//var deck = new Deck()  //will have to call new "modulename".Deck()
-//console.log(deck)
+
+ 
+  
+ var module = {
+   
+   "Card": Card,
+   "Deck": Deck,
+   "Shoe": Shoe,
+   "Hand": Hand         
+             }
+     return module
+             
+             }) ()
+      
+             
+//var deck = new cards.Deck()  //will have to call new "modulename".Deck()
+
 
 //var shoe = new Shoe(2)
 //shoe.shuffle()
 //console.log(shoe)
+//var deck = new cards.Deck()
+//console.log(deck)
+//var shoe = new cards.Shoe(2)
+//console.log(shoe)
+//var hand = new cards.Hand(5,deck)
+//console.log(hand)
 
-var hand = new Hand(5,2)
-console.log(hand)
 
-hand.addCard()
-console.log(hand)
-hand.addCard()
-console.log(hand)
+/*hand.addCard()
+console.log(hand.card_array)
+
 
 hand.disgardHand()
-console.log(hand)
+console.log(hand.card_array)
 
 hand.addCard()
 console.log(hand)
 hand.addCard()
-console.log(hand)
+console.log(hand)*/
 
 
 
